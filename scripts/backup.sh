@@ -6,7 +6,6 @@ set -o nounset
 
 # Check if environment vars exists
 : ${MYSQL_HOST?"You need to set the MYSQL_HOST environment variable."}
-: ${MYSQL_PORT?"You need to set the MYSQL_PORT environment variable."}
 : ${MYSQL_USER?"You need to set the MYSQL_USER environment variable."}
 : ${MYSQL_PASSWORD?"You need to set the MYSQL_PASSWORD environment variable."}
 : ${MYSQL_DATABASE?"You need to set the MYSQL_DATABASE environment variable."}
@@ -23,7 +22,7 @@ mysql_backup() {
   dump_file="mysql-backups/${backup_date}_${MYSQL_DATABASE}.sql.gz"
 
   # Backup single database
-  mysqldump --host=${MYSQL_HOST} --port=${MYSQL_PORT} --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} \
+  mysqldump --host=${MYSQL_HOST} --port=${MYSQL_PORT:-3306} --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} \
     --set-gtid-purged=OFF --triggers --routines --events --single-transaction --quick \
     --databases ${MYSQL_DATABASE} \
     | gzip > ${dump_file}
