@@ -11,7 +11,7 @@ if [[ $BACKUP_ON != "true" ]]; then
 fi
 
 # Set crontab
-echo -e "${SCHEDULE} cd / && ./backup.sh >> /dev/null 2>&1 \n#" | crontab -
+echo "${SCHEDULE} cd / && ./backup.sh >> /dev/null 2>&1 \n#" | crontab -
 
 # Run crontab on foreground
 crond -f
